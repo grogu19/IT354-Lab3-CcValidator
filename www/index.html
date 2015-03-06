@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="Free responsive starter kits from Dreamweaver CC">
+
+<meta name="keywords" content="HTML5,CSS3,Dreamweaver CC,Starter kits,Free templates">
+
+<meta name="author" content="Adobe Dreamweaver CC">
+
+<title>CC Validator</title>
+
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+
+<link href="css/portfolioResponsive.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/themes/new.css" />
+<link rel="stylesheet" href="css/themes/new.min.css" />
+<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+<link href="css/portfolioStyle.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,400italic,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link rel="import" href="result-dialog.html">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+<script src="js/respond.min.js"></script>
+
+
+
+<!-- Import any font of your choice-->
+
+<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
+
+<script>var __adobewebfontsappname__="dreamweaver"</script>
+
+<script src="http://use.edgefonts.net/montserrat:n4:default;alice:n4:default.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div data-role="page" class="clearfix ui-page-theme-b">
+  <article class="fluid textContainer">
+    <div id="cardInput" align="center" class="fluid">    </div>
+  </article>
+  <header class="fluid hero heroHeader">
+    <!--Add you logo here-->
+    <h1 class="fluid mainHeading headingStyle">Credit Card Validator</h1>
+  </header>
+  
+  <article class="fluid textContainer">
+    
+    	    <h6 class="fluid mainTagline textStyle">Check if your credit card number follows Luhn algorithm.</h6>
+      <h2 class="sectionText ribbon"><div class="ribbon-content">Enter Credit card number</div></h2>
+      
+      
+      <input class="textInput ui-textinput-autogrow-resize" data-clear-btn="true" placeholder="Enter Here !!!!" type="text" name="cardno" id="cardno" value=""/>
+       <a href="#" onClick="valid_card(document.getElementById('cardno').value)" data-rel="dialog" id="check" data-transition="flip" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Validate!!!</a>     
+      
+  </article>
+  
+</div>
+
+    
+    <!--http://api.jquerymobile.com/dialog/-->
+<!-- Dialog only page -->
+
+<div data-role="dialog" id="dialog-success" class="ui-page ui-dialog">
+       <!-- dialog-->
+          <div data-role="header" data-theme="b" role="banner" class="ui-header ui-bar-b">
+            <h1 class="ui-title" role="heading" id="diaHeader" aria-level="1">Congratulations</h1>
+          </div>
+          <!-- /header -->
+          <div class="ui-content" data-role="main">
+            <p style="color:green; font-size:14px;">Valid Credit Card Number</p>
+            <a href="index.html" onclick="reset()" class="ui-btn ui-corner-all ui-shadow ui-btn-b" data-rel="back" data-transition="fade" data-direction="reverse">Go back</a> </div>
+        
+      </div>
+
+  <!-- Dialog only page -->
+
+<div data-role="dialog" id="dialog-fail" class="ui-page ui-dialog">
+       <!-- dialog-->
+          <div data-role="header" data-theme="b" role="banner" class="ui-header ui-bar-b">
+            <h1 class="ui-title" role="heading" id="diaHeader" aria-level="1">Sorry</h1>
+          </div>
+          <!-- /header -->
+          <div class="ui-content" data-role="main">
+            <p id="error" style="color:red; font-size:14px;"></p>
+            <a href="index.html" onclick="reset()" class="ui-btn ui-corner-all ui-shadow ui-btn-b" data-rel="back" data-transition="fade" data-direction="reverse">Retry</a> </div>
+        
+      </div>
+  
+</div> 
+</body>
+<script>
+    
+    function reset(){
+        document.getElementById("check").setAttribute("href","#");
+    }
+	
+	// takes the form field value and returns true on valid number
+    //Reference-https://stackoverflow.com/questions/12310837/implementation-of-luhn-algorithm
+	function valid_card(value) {
+	// accept only digits, dashes or spaces
+	
+		if (/[^0-9-\s]+/.test(value)||(value=="") || (value==null)){
+			if (value.length!=16){
+						document.getElementById("error").innerHTML="Insufficent digits";
+				return document.getElementById("check").setAttribute("href","#dialog-fail");
+				}
+			 	document.getElementById("error").innerHTML="Invalid Credit Card Number";
+			 return document.getElementById("check").setAttribute("href","#dialog-fail");
+		}
+			
+		
+	
+		var nCheck = 0, nDigit = 0, bEven = false;
+		value = value.replace(/\D/g, "");
+	
+		for (var n = value.length - 1; n >= 0; n--) {
+			var cDigit = value.charAt(n),
+				nDigit = parseInt(cDigit, 10);
+	
+			if (bEven) {
+				if ((nDigit *= 2) > 9) nDigit -= 9;
+			}
+	
+			nCheck += nDigit;
+			bEven = !bEven;
+		}
+	
+		if((nCheck % 10) == 0){
+			return document.getElementById("check").setAttribute("href","#dialog-success");
+		}
+		
+	}
+
+
+</script>
+</html>
